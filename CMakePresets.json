@@ -1,0 +1,46 @@
+﻿{
+    "version": 3,
+  "configurePresets": [
+    {
+      "name": "emscripten-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+      }
+    },
+    {
+      "name": "emscripten-debug",
+      "displayName": "emscripten-debug",
+      "inherits": "emscripten-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "emscripten-release",
+      "displayName": "emscripten-release",
+      "inherits": "emscripten-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "emscripten-base-build",
+      "description": "Inherits environment from base configurePreset",
+      "configurePreset": "emscripten-base",
+      "hidden": true,
+      "inheritConfigureEnvironment": true
+
+    },
+    {
+      "name": "emscripten-debug",
+      "configurePreset": "emscripten-debug",
+      "inherits": "emscripten-base-build"
+    }
+  ]
+}
